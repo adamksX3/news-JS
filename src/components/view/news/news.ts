@@ -3,7 +3,6 @@ import { Article } from '../../../types';
 import { getElement } from '../../../utils/dom';
 
 const MAX_NEWS_COUNT = 10;
-const PLACEHOLDER_IMAGE = 'img/news_placeholder.jpg';
 
 class News {
     public draw(data: Readonly<Article>[]): void {
@@ -17,9 +16,10 @@ class News {
 
             if (idx % 2) getElement(newsClone, '.news__item').classList.add('alt');
 
-            getElement<HTMLElement>(newsClone, '.news__meta-photo').style.backgroundImage = `url(${
-                item.urlToImage || PLACEHOLDER_IMAGE
-            })`;
+            if (item.urlToImage) {
+                getElement<HTMLElement>(newsClone, '.news__meta-photo').style.backgroundImage =
+                    `url(${item.urlToImage})`;
+            }
             getElement(newsClone, '.news__meta-author').textContent = item.author || item.source.name;
             getElement(newsClone, '.news__meta-date').textContent = item.publishedAt
                 .slice(0, 10)
