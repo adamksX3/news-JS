@@ -1,20 +1,22 @@
 import './sources.css';
+import { SourceItem } from '../../../types';
+import { getElement } from '../../../utils/dom';
 
 class Sources {
-    draw(data) {
+    public draw(data: SourceItem[]): void {
         const fragment = document.createDocumentFragment();
-        const sourceItemTemp = document.querySelector('#sourceItemTemp');
+        const sourceItemTemp = getElement<HTMLTemplateElement>(document, '#sourceItemTemp');
 
         data.forEach((item) => {
-            const sourceClone = sourceItemTemp.content.cloneNode(true);
+            const sourceClone = sourceItemTemp.content.cloneNode(true) as DocumentFragment;
 
-            sourceClone.querySelector('.source__item-name').textContent = item.name;
-            sourceClone.querySelector('.source__item').setAttribute('data-source-id', item.id);
+            getElement(sourceClone, '.source__item-name').textContent = item.name;
+            getElement(sourceClone, '.source__item').setAttribute('data-source-id', item.id);
 
             fragment.append(sourceClone);
         });
 
-        document.querySelector('.sources').append(fragment);
+        getElement(document, '.sources').append(fragment);
     }
 }
 
