@@ -29,3 +29,22 @@ export interface NewsResponse {
     totalResults: number;
     articles: Article[];
 }
+
+export interface ApiOptions {
+    apiKey: string;
+    sources: string;
+}
+
+export enum Endpoint {
+    Sources = 'sources',
+    Everything = 'everything',
+}
+
+export type Callback<T> = (data: T) => void;
+
+export interface RequestParams {
+    endpoint: Endpoint;
+    options?: Partial<ApiOptions>;
+}
+
+export type SourceItem = Pick<Source, 'id' | 'name'>;
